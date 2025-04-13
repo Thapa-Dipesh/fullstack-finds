@@ -72,7 +72,7 @@ const ProductTabs = ({
                     required
                     value={rating}
                     onChange={(e) => setRating(e.target.value)}
-                    className="p-2 border rounded-lg xl:w-[40rem] text-black"
+                    className="p-2 border rounded-lg xl:w-[40rem] text-white bg-[#1a1a1a]"
                   >
                     <option value="">Select</option>
                     <option value="1">Inferior</option>
@@ -94,13 +94,13 @@ const ProductTabs = ({
                     required
                     value={comment}
                     onChange={(e) => setComment(e.target.value)}
-                    className="p-2 border rounded-lg xl:w-[40rem] text-black"
+                    className="p-2 border rounded-lg xl:w-[40rem] "
                   ></textarea>
                 </div>
                 <button
                   type="submit"
                   disabled={loadingProductReview}
-                  className="bg-pink-600 text-white py-2 px-4 rounded-lg"
+                  className="bg-pink-500 hover:bg-pink-600 text-white py-2 px-4 rounded-lg cursor-pointer"
                 >
                   Submit
                 </button>
