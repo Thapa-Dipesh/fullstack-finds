@@ -27,7 +27,7 @@ const ProductCarousel = () => {
   };
 
   return (
-    <div className="mb-4 p-10 bg-[#151515] shadow-2xl lg:block xl:block md:block">
+    <div className="p-10 shadow-2xl w-[100%] lg:block xl:block md:block ">
       {isLoading ? null : error ? (
         <Message variant="danger">
           {error?.data?.message || error.error}
@@ -58,17 +58,17 @@ const ProductCarousel = () => {
                   className="w-full rounded-lg object-cover h-[30rem]"
                 />
 
-                <div className="mt-4 flex justify-between">
+                <div className="mt-10 flex justify-between flex-col sm:flex-row">
                   <div className="one">
                     <h2>{name}</h2>
                     <p> $ {price}</p> <br /> <br />
-                    <p className="w-[25rem]">
+                    <p className="hidden sm:flex w-[25rem]">
                       {description.substring(0, 170)} ...
                     </p>
                   </div>
 
-                  <div className="flex justify-between w-[20rem]">
-                    <div className="one">
+                  <div className="flex flex:col justify-between w-[20rem]">
+                    <div className="one flex flex-col">
                       <h1 className="flex items-center mb-6">
                         <FaStore className="mr-2 text-white" /> Brand: {brand}
                       </h1>
@@ -82,7 +82,7 @@ const ProductCarousel = () => {
                       </h1>
                     </div>
 
-                    <div className="two">
+                    <div className="two flex flex-col">
                       <h1 className="flex items-center mb-6">
                         <FaStar className="mr-2 text-white" /> Ratings:
                         {Math.round(rating)}
