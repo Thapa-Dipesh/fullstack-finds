@@ -24,84 +24,105 @@ const Cart = () => {
 
   return (
     <>
-      <div className="container flex justify-around items-start flex wrap mx-auto mt-8">
+      <div className="container flex justify-center items-center flex wrap mx-auto mt-8">
         {cartItems.length === 0 ? (
           <div>
-            Your cart is empty <Link to="/shop" className="text-pink-500 italic hover:underline">Go To Shop</Link>
+            Your cart is empty{" "}
+            <Link to="/shop" className="text-pink-500 italic hover:underline">
+              Go To Shop
+            </Link>
           </div>
         ) : (
           <>
-            <div className="flex flex-col w-[80%]">
-              <h1 className="text-2xl font-semibold mb-4">Shopping Cart</h1>
+            <div className="flex flex-col w-full md:w-[50%]">
+              <h1 className="text-4xl font-semibold mb-10 bg-black p-4 rounded-md">
+                Shopping Cart
+              </h1>
 
-              {cartItems.map((item) => (
-                <div key={item._id} className="flex items-enter mb-[1rem] pb-2">
-                  <div className="w-[5rem] h-[5rem]">
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="w-full h-full object-cover rounded"
-                    />
-                  </div>
+              <div className="flex flex-col">
+                <div>
+                  {cartItems.map((item) => (
+                    <div
+                      key={item._id}
+                      className="flex items-center justify-between md:px-5 flex-col md:flex-row mb-[1rem] pb-2 bg-[#1a1a1a] rounded-md"
+                    >
+                      <div className="w-full md:w-fit flex justify-between items-center px-4 md:px-0 py-2 md:gap-8">
+                        <img
+                          src={item.image}
+                          alt={item.name}
+                          className="w-[8rem] h-[8rem] object-cover rounded"
+                        />
 
-                  <div className="flex-1 ml-4">
-                    <Link to={`/product/${item._id}`} className="text-pink-500">
-                      {item.name}
-                    </Link>
+                        <div className="flex flex-col">
+                          <Link
+                            to={`/product/${item._id}`}
+                            className="text-pink-500"
+                          >
+                            {item.name}
+                          </Link>
 
-                    <div className="mt-2 text-white">{item.brand}</div>
-                    <div className="mt-2 text-white font-bold">
-                      $ {item.price}
+                          <div className="text-white">{item.brand}</div>
+                          <div className="text-white font-bold">
+                            $ {item.price}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="w-full md:w-fit flex justify-between px-4 md:px-0 py-4 md:py-0">
+                        <div className="w-24">
+                          <select
+                            className="w-full p-1 border rounded bg-black"
+                            value={item.qty}
+                            onChange={(e) =>
+                              addToCartHandler(item, Number(e.target.value))
+                            }
+                          >
+                            {[...Array(item.countInStock).keys()].map((x) => (
+                              <option key={x + 1} value={x + 1}>
+                                {x + 1}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+
+                        <div>
+                          <button
+                            className="text-red-500"
+                            onClick={() => removeFromCartHandler(item._id)}
+                          >
+                            <FaTrash
+                              size={25}
+                              className="ml-6 mt-1 cursor-pointer"
+                            />
+                          </button>
+                        </div>
+                      </div>
                     </div>
-                  </div>
+                  ))}
+                </div>
 
-                  <div className="w-24">
-                    <select
-                      className="w-full p-1 border rounded bg-black"
-                      value={item.qty}
-                      onChange={(e) =>
-                        addToCartHandler(item, Number(e.target.value))
-                      }
-                    >
-                      {[...Array(item.countInStock).keys()].map((x) => (
-                        <option key={x + 1} value={x + 1}>
-                          {x + 1}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
+                <div className="mt-8 w-full bg-black rounded-md px-6">
+                  <div className="py-4 rounded-lg">
+                    <h2 className="text-xl font-semibold mb-2">
+                      Items (
+                      {cartItems.reduce((acc, item) => acc + item.qty, 0)})
+                    </h2>
 
-                  <div>
+                    <div className="text-2xl font-bold">
+                      ${" "}
+                      {cartItems
+                        .reduce((acc, item) => acc + item.qty * item.price, 0)
+                        .toFixed(2)}
+                    </div>
+
                     <button
-                      className="text-red-500 mr-[5rem]"
-                      onClick={() => removeFromCartHandler(item._id)}
+                      className="bg-pink-500 hover:bg-pink-600 cursor-pointer mt-6 py-2 px-4 rounded-full text-lg w-full"
+                      disabled={cartItems.length === 0}
+                      onClick={checkoutHandler}
                     >
-                      <FaTrash size={25} className="ml-[1.5rem] mt-1 cursor-pointer" />
+                      Proceed To Checkout
                     </button>
                   </div>
-                </div>
-              ))}
-
-              <div className="mt-8 w-[40rem]">
-                <div className="p-4 rounded-lg">
-                  <h2 className="text-xl font-semibold mb-2">
-                    Items ({cartItems.reduce((acc, item) => acc + item.qty, 0)})
-                  </h2>
-
-                  <div className="text-2xl font-bold">
-                    ${" "}
-                    {cartItems
-                      .reduce((acc, item) => acc + item.qty * item.price, 0)
-                      .toFixed(2)}
-                  </div>
-
-                  <button
-                    className="bg-pink-500 hover:bg-pink-600 cursor-pointer mt-4 py-2 px-4 rounded-full text-lg w-full"
-                    disabled={cartItems.length === 0}
-                    onClick={checkoutHandler}
-                  >
-                    Proceed To Checkout
-                  </button>
                 </div>
               </div>
             </div>
