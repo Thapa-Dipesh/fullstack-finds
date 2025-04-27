@@ -89,11 +89,11 @@ const CategoryList = () => {
   };
 
   return (
-    <div className="ml-[10rem] flex flex-col md:flex-row">
+    <div className="md:pl-[10rem]">
       <AdminMenu />
 
       <div className="md:w-3/4 p-3">
-        <div className="h-12">Manage Categories</div>
+        <div className="text-3xl font-semibold mb-4">Manage Categories</div>
         <CategoryForm
           value={name}
           setValue={setName}

@@ -69,17 +69,17 @@ const UserList = () => {
           <table className="w-full md:w-4/5 mx-auto">
             <thead>
               <tr>
-                <th className="px-4 py-2 text-left">ID</th>
+                <th className="px-4 py-2 text-left hidden lg:flex">ID</th>
                 <th className="px-4 py-2 text-left">NAME</th>
                 <th className="px-4 py-2 text-left">EMAIL</th>
-                <th className="px-4 py-2 text-left">ADMIN</th>
+                <th className="px-4 py-2 text-left hidden lg:flex">ADMIN</th>
                 <th className="px-4 py-2 text-left"></th>
               </tr>
             </thead>
             <tbody>
               {users.map((user) => (
                 <tr key={user._id}>
-                  <td className="px-4 py-2">{user._id}</td>
+                  <td className="px-4 py-2 hidden lg:flex">{user._id}</td>
 
                   <td className="px-4 py-2">
                     {editableUserId === user._id ? (
@@ -141,7 +141,7 @@ const UserList = () => {
                     )}
                   </td>
 
-                  <td className="px-4 py-2">
+                  <td className="px-4 py-2 hidden lg:flex">
                     {user.isAdmin ? (
                       <FaCheck style={{ color: "green" }} />
                     ) : (

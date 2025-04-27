@@ -6,7 +6,7 @@ const CategoryForm = ({
   handleDelete,
 }) => {
   return (
-    <div className="p-3">
+    <div className="py-6">
       <form onSubmit={handleSubmit} className="space-y-3">
         <input
           type="text"
