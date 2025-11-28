@@ -1,27 +1,34 @@
 # Netlify Configuration File (netlify.toml)
 
-# This configuration ensures all JavaScript and CSS assets are served with the correct MIME types.
+# This configuration ensures all JavaScript, JSX, and CSS assets are served with the correct MIME types.
+
+# --- JSX and JavaScript files in the 'assets' folder ---
 
 [[headers]]
-
-# Fix for JavaScript files in the 'assets' folder (most common)
-
 for = "/assets/*.js"
 [headers.values]
 Content-Type = "application/javascript"
 
 [[headers]]
+for = "/assets/*.jsx"
+[headers.values]
+Content-Type = "application/javascript"
 
-# Fix for JavaScript files in the root folder
+# --- JSX and JavaScript files in the root folder ---
 
+[[headers]]
 for = "/*.js"
 [headers.values]
 Content-Type = "application/javascript"
 
 [[headers]]
+for = "/*.jsx"
+[headers.values]
+Content-Type = "application/javascript"
 
-# Fix for CSS files
+# --- CSS files ---
 
+[[headers]]
 for = "/assets/*.css"
 [headers.values]
 Content-Type = "text/css"
