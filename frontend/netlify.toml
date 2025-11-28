@@ -1,0 +1,35 @@
+netlify.toml
+
+==============================================================================
+
+HEADER CONFIGURATION
+
+This section fixes the "MIME type ('application/octet-stream') is not a supported" error
+
+by explicitly forcing Netlify to use the correct Content-Type header for JavaScript files.
+
+==============================================================================
+
+[[headers]]
+
+Target JavaScript files in the common 'assets' subdirectory (e.g., /assets/index-xxxxxxxx.js)
+
+for = "/assets/*.js"
+[headers.values]
+Content-Type = "application/javascript"
+
+[[headers]]
+
+Target JavaScript files located in the build's root directory (e.g., /main.js)
+
+for = "/*.js"
+[headers.values]
+Content-Type = "application/javascript"
+
+[[headers]]
+
+Target CSS files in case they also have a MIME type issue
+
+for = "/assets/*.css"
+[headers.values]
+Content-Type = "text/css"
