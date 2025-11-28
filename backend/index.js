@@ -3,6 +3,7 @@ import path from "path";
 import express from "express";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 
 // utilities
 import connectDB from "./config/db.js";
@@ -13,12 +14,20 @@ import uploadRoutes from "./routes/uploadRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 
 dotenv.config();
-const port = process.env.PORT || 4000;
 connectDB();
 
 const app = express();
+const port = process.env.PORT || 4000;
+const allowedOrigin = process.env.FRONTEND_URL;
+const corsOptions = {
+  origin: allowedOrigin,
+  credentials: true,
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  allowedHeaders: "Content-Type,Authorization",
+};
 
 // middlewares
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
