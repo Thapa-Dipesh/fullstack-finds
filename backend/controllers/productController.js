@@ -3,10 +3,13 @@ import Product from "../models/productModel.js";
 
 const addProduct = asyncHandler(async (req, res) => {
   try {
-    const { name, description, price, category, quantity, brand } = req.fields;
+    const { image, name, description, price, category, quantity, brand } =
+      req.body;
 
     // validation
     switch (true) {
+      case !image:
+        return res.json({ error: "Image is required" });
       case !name:
         return res.json({ error: "Name is required" });
       case !brand:
@@ -21,7 +24,16 @@ const addProduct = asyncHandler(async (req, res) => {
         return res.json({ error: "Quantity is required" });
     }
 
-    const product = new Product({ ...req.fields });
+    const product = new Product({
+      image,
+      name,
+      description,
+      price,
+      category,
+      quantity,
+      brand,
+      user: req.user._id,
+    });
     await product.save();
     res.json(product);
   } catch (error) {
@@ -32,7 +44,7 @@ const addProduct = asyncHandler(async (req, res) => {
 
 const updateProductDetails = asyncHandler(async (req, res) => {
   try {
-    const { name, description, price, category, quantity, brand } = req.fields;
+    const { name, description, price, category, quantity, brand } = req.body;
 
     // validation
     switch (true) {
@@ -52,7 +64,7 @@ const updateProductDetails = asyncHandler(async (req, res) => {
 
     const product = await Product.findByIdAndUpdate(
       req.params.id,
-      { ...req.fields },
+      { ...req.body },
       { new: true }
     );
     await product.save();
