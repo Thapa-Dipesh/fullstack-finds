@@ -33,13 +33,13 @@ const ProductList = () => {
       productData.append("image", image);
       productData.append("name", name);
       productData.append("description", description);
-      productData.append("price", price);
+      productData.append("price", Number(price));
       productData.append("category", category);
-      productData.append("quantity", quantity);
+      productData.append("quantity", Number(quantity));
       productData.append("brand", brand);
-      productData.append("countInStock", stock);
+      productData.append("countInStock", Number(stock));
 
-      const { data } = await createProduct(productData);
+      const  data  = await createProduct(productData).unwrap();
 
       if (data.error) {
         toast.error("Product creation failed, Try Again.");
@@ -49,18 +49,22 @@ const ProductList = () => {
       }
     } catch (error) {
       console.error(error);
-      toast.error("Product creation failed, Try Again.");
+      toast.error("Product creation failed in backend, Try Again.");
     }
   };
 
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0];
+    console.log(file);
+    
     const formData = new FormData();
     formData.append("image", file);
 
     try {
       // Pass the formData instance you created
       const res = await uploadProductImage(formData).unwrap();
+      console.log(res);
+      
       toast.success(res.message);
       setImage(res.image);
       setImageUrl(res.image);
@@ -81,6 +85,7 @@ const ProductList = () => {
             <div className="text-center">
               <img
                 src={imageUrl}
+                name="image"
                 alt="product"
                 className="mx-auto max-h-[200px]"
               />
@@ -92,8 +97,7 @@ const ProductList = () => {
               {image ? image.name : "Upload Image"}
 
               <input
-                type="file"
-                name="image"
+                type="text"
                 accept="image/*"
                 onChange={uploadFileHandler}
                 className={!image ? "hidden" : "text-white"}
@@ -107,6 +111,7 @@ const ProductList = () => {
                 <label htmlFor="name">Name</label> <br />
                 <input
                   type="text"
+                  name="name"
                   className="p-4 mb-3 w-full border rounded-lg bg-[#101011] text-white"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
@@ -117,6 +122,7 @@ const ProductList = () => {
                 <label htmlFor="name block">Price</label> <br />
                 <input
                   type="number"
+                  name="price"
                   className="p-4 mb-3 w-full border rounded-lg bg-[#101011] text-white"
                   value={price}
                   onChange={(e) => setPrice(e.target.value)}
@@ -129,6 +135,7 @@ const ProductList = () => {
                 <label htmlFor="name block">Quantity</label> <br />
                 <input
                   type="number"
+                  name="quantity"
                   className="p-4 mb-3 w-full border rounded-lg bg-[#101011] text-white"
                   value={quantity}
                   onChange={(e) => setQuantity(e.target.value)}
@@ -139,6 +146,7 @@ const ProductList = () => {
                 <label htmlFor="name block">Brand</label> <br />
                 <input
                   type="text"
+                  name="brand"
                   className="p-4 mb-3 w-full border rounded-lg bg-[#101011] text-white"
                   value={brand}
                   onChange={(e) => setBrand(e.target.value)}
@@ -149,6 +157,7 @@ const ProductList = () => {
             <label className="my-2">Description</label>
             <textarea
               type="text"
+              name="description"
               className="p-2 mb-3 bg-[#101011] border rounded-lg w-full text-white"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
@@ -160,6 +169,7 @@ const ProductList = () => {
                 <br />
                 <input
                   type="text"
+                  name="countInStock"
                   className="p-4 mb-4 w-full border rounded-lg bg-[#101011] text-white"
                   value={stock}
                   onChange={(e) => setStock(e.target.value)}
@@ -184,6 +194,7 @@ const ProductList = () => {
             </div>
 
             <button
+            type="submit"
               onClick={handleSubmit}
               className="py-4 px-10 mt-5 rounded-lg text-lg font-bold bg-pink-500 cursor-pointer hover:bg-pink-600"
             >
